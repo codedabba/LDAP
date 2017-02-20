@@ -1,1 +1,1 @@
-$(document).ready(function(){  alert("welcome");});
+$(document).ready(function(){  alert("welcome guest");});
