@@ -1,0 +1,45 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.DirectoryServices;
+
+namespace LDAP
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            /* 
+            LDAP Online Test Server
+            http://www.forumsys.com/tutorials/integration-how-to/ldap/online-ldap-test-server/ 
+            */
+            string ldapServer = "LDAP://ldap.forumsys.com:389/ou=scientists,dc=example,dc=com";
+            string userName = "cn=read-only-admin,dc=example,dc=com";
+            string password = "password";
+
+            var result = IsAuthenticated(ldapServer,userName,password);
+        }
+
+        public static bool IsAuthenticated(string ldapServer, string userName, string password)
+        {
+            bool authenticated = false;
+
+           
+            var dirctoryEntry = new DirectoryEntry(ldapServer, userName, password, AuthenticationTypes.ServerBind);
+
+            try
+            {
+                object nativeObject = dirctoryEntry.NativeObject;
+                authenticated = true;
+                //Rest of the logic
+            }
+            catch (Exception ex)
+            {
+                authenticated = false;
+            }
+            return authenticated;
+        }
+    }
+}
